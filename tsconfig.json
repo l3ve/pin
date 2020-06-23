@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "target": "ES2020",
+    "sourceRoot": "./src",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationDir": "./dist",
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "removeComments": true,
+    "strict": true
+  }
+}

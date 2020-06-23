@@ -1,0 +1,30 @@
+{
+  "name": "pin",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && rollup -c"
+  },
+  "keywords": [
+    "state",
+    "store",
+    "react",
+    "hooks"
+  ],
+  "author": "L3've",
+  "dependencies": {},
+  "repository": "https://github.com/l3ve/pin",
+  "devDependencies": {
+    "@types/react": "^16.9.38",
+    "rollup": "^2.17.1",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "typescript": "^3.9.5"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0"
+  }
+}
