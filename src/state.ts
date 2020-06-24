@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { event } from './event'
 
 function useStoreState(key: string, value: any) {
-  let [, set] = useState(value)
+  let [curValue, set] = useState(value)
 
   useEffect(() => {
     event.add(key, set)
@@ -11,7 +11,7 @@ function useStoreState(key: string, value: any) {
     }
   }, [])
 
-  return value
+  return curValue
 }
 
 export {

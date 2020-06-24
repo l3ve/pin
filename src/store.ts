@@ -7,7 +7,7 @@ class _Store {
   private store = new Map()
 
   constructor(initStroe: {}) {
-    Object.keys(initStroe).forEach((k, v) => {
+    Object.entries(initStroe).forEach(([k, v]) => {
       if (this.store.has(k)) {
         console.warn('重复的数据')
         return
@@ -16,7 +16,7 @@ class _Store {
       this.store.set(k, v)
     });
   }
-  state(key: string) {
+  getState(key: string) {
     let value = this.store.get(key)
     if (!value) {
       throw new Error(`store 不存在key为：${key} 的值`)
@@ -24,10 +24,14 @@ class _Store {
     value = useStoreState(key, value)
     return value
   }
-  update(key: string) {
-    let valueRef = this.store.get(key)
-
-    event.emit(key, valueRef.current)
+  update(key: string, fun: Function) {
+    let value = this.store.get(key)
+    let new_value = fun(value)
+    if (Object.is(value, new_value)) {
+      return
+    }
+    this.store.set(key, new_value)
+    event.emit(key, new_value)
     return
   }
 }
