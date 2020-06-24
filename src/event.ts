@@ -9,11 +9,17 @@ class Event {
     if (!this.event[key]) {
       this.event[key] = new Map()
     }
+    if (this.event[key].has(fun)) {
+      return
+    }
     this.event[key].set(fun, false)
   }
   addOnce(key: string, fun: Function) {
     if (!this.event[key]) {
       this.event[key] = new Map()
+    }
+    if (this.event[key].has(fun)) {
+      return
     }
     this.event[key].set(fun, true)
   }
