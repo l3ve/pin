@@ -1,19 +1,13 @@
 import { useStoreState } from './state'
 import { event } from './event'
+import { map2obj, obj2map, mapMergeObj } from './utils'
 
 class _Store {
 
   private store = new Map()
 
   constructor(initStroe: {}) {
-    Object.entries(initStroe).forEach(([k, v]) => {
-      if (this.store.has(k)) {
-        console.warn('重复的数据')
-        return
-      }
-      // let _v = useRef(v)
-      this.store.set(k, v)
-    });
+    this.store = obj2map(initStroe)
   }
   getState(key: string) {
     let value = this.store.get(key)
@@ -23,14 +17,19 @@ class _Store {
     value = useStoreState(key, value)
     return value
   }
-  update(key: string, fun: Function) {
-    let value = this.store.get(key)
-    let new_value = fun(value)
-    if (Object.is(value, new_value)) {
-      return
+  update(fun: Function) {
+    let _store = map2obj(this.store)
+    let new_store = fun(_store)
+    // todo: 之后优化，这里比如不相等
+    // if (Object.is(_store, new_store)) {
+    //   return
+    // }
+    let { isSame, obj } = mapMergeObj(this.store, new_store)
+    if (!isSame) {
+      Object.entries(obj).forEach(([k, v]) => {
+        event.emit(k, v)
+      })
     }
-    this.store.set(key, new_value)
-    event.emit(key, new_value)
     return
   }
 }
