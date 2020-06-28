@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { event } from './event'
+import { Event } from './event'
 
-function useStoreState(key: string, value: any) {
+function useStoreState(key: string, value: any, event: Event) {
   let [curValue, set] = useState(value)
 
   // 不放 effect 里面是因为不同步，可能会造成

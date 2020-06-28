@@ -41,8 +41,6 @@ class Event {
 
 }
 
-let event = new Event()
 export {
-  event,
   Event
 }

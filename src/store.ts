@@ -1,20 +1,22 @@
 import { useStoreState } from './state'
-import { event } from './event'
+import { Event } from './event'
 import { map2obj, obj2map, mapMergeObj } from './utils'
 
 class _Store {
 
   private store = new Map()
+  private event: Event
 
   constructor(initStroe: {}) {
     this.store = obj2map(initStroe)
+    this.event = new Event()
   }
   getState(key: string) {
     let value = this.store.get(key)
     if (!value) {
       throw new Error(`store 不存在key为：${key} 的值`)
     }
-    value = useStoreState(key, value)
+    value = useStoreState(key, value, this.event)
     return value
   }
   update(fun: Function) {
@@ -27,7 +29,7 @@ class _Store {
     let { isSame, obj } = mapMergeObj(this.store, new_store)
     if (!isSame) {
       Object.entries(obj).forEach(([k, v]) => {
-        event.emit(k, v)
+        this.event.emit(k, v)
       })
     }
     return
